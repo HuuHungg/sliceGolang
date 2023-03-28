@@ -1,27 +1,50 @@
 package main
 
-import (
-	"fmt"
-)
+import "fmt"
+
+type Student struct {
+	name string
+}
+
+// Define method
+func (s Student) getName() string {
+	return s.name
+}
+
+// 1.Value Reciever
+func (s Student) changeName() {
+	fmt.Printf("p2 = %p", &s)
+	s.name = "Robin"
+}
+
+// 2.Pointer receiver
+func (s *Student) changeName2() {
+	fmt.Printf("p2 = %p", s)
+	fmt.Println()
+
+	s.name = "Robin2"
+}
+
+// 3. Non-struct
+
+type String string
+
+func (s String) append(str string) string {
+	return fmt.Sprintf("%s%s", s, str)
+}
 
 func main() {
-	// Tạo một map với key là string và value là int
-	ages := make(map[string]string)
+	student := &Student{name: "Ryan"}
 
-	// Thêm các phần tử vào map
-	ages["Alice"] = "ITを勉強してる"
-	ages["Bob"] = "難しいです"
-	ages["Charlie"] = "頑張りましょう"
+	fmt.Printf("p1 = %p", student)
+	fmt.Println()
 
-	// Lấy giá trị của phần tử có key là "Alice"
-	aliceAge := ages["Alice"]
-	fmt.Println("Alice is", aliceAge, "years old")
+	student.changeName2()
+	fmt.Println(student.name)
 
-	// Kiểm tra xem một key có tồn tại trong map hay không
-	if age, ok := ages["David"]; ok {
-		fmt.Println("David is", age, "years old")
-	} else {
-		fmt.Println("David is not in the map")
-	}
+	s1 := String("a")
+	newStr := s1.append("c")
+
+	fmt.Println(newStr)
 
 }
